@@ -8,7 +8,7 @@
 
 ## ✨ 为什么选这个 Skill？
 
-- **零配置，开箱即用** —— 不需要申请 API Key，不需要填写 Base URL，不需要设置环境变量。使用一条 `npx` 命令即可完成安装。
+- **零配置，开箱即用** —— 不需要申请 API Key，不需要填写 Base URL，不需要设置环境变量。将 Skill 目录复制到选定的 `.agents/skills` 位置即可使用。
 - **通用兼容** —— 遵循 [Agent Skills 规范](https://agentskills.io/specification)，适用于支持该规范且允许执行 Node.js 命令的智能体框架。
 - **本地 + 网络图片都支持** —— 支持 JPEG、PNG、GIF、WebP、BMP，本地路径和 HTTP/HTTPS URL 均可。
 - **极简依赖** —— 运行时零第三方 npm 依赖，只需 Node.js 18+。
@@ -26,47 +26,58 @@
 请帮我安装 agent-vision Skill：
 https://github.com/5258MF/agent-vision-skill
 
-先确认 Node.js 版本不低于 18，然后优先执行：
-npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy
+执行任何文件写入前，先询问我要安装到哪个范围：
 
-安装后确认当前智能体能够发现 agent-vision，告诉我实际安装路径，以及是否需要重启或新建会话。该 Skill 已固定使用 OpenCode Zen 的 mimo-v2.5-free，不要要求我配置 API Key、Base URL 或模型名，也不要修改无关项目文件。如果当前框架不能被 Skills CLI 识别，则根据该框架的 Skill 文档，将仓库中的 skills/agent-vision 复制到用户级 Skill 目录并验证。
+1. 用户级（推荐）：~/.agents/skills/agent-vision
+2. 当前项目：<项目根目录>/.agents/skills/agent-vision
+
+等待我明确选择后再继续。不要同时安装到两个位置，也不要向所有智能体框架批量复制。
+
+先确认 Node.js 版本不低于 18，然后将仓库下载到临时目录，只把仓库中的 skills/agent-vision 复制到选定位置。项目级安装必须使用项目根目录；如果当前目录属于 Git 仓库，优先以 Git 仓库根目录为准。复制完成后清理临时下载文件。
+
+如果目标目录已经存在，不要直接覆盖。先告诉我是已有安装，并询问我要更新还是取消；只有在我确认更新后才能替换该目录。
+
+安装后确认目标目录中存在 SKILL.md 和 scripts/vision.js，并验证当前智能体能否发现 agent-vision。告诉我实际安装路径，以及是否需要重启或新建会话。
+
+该 Skill 已固定使用 OpenCode Zen 的 mimo-v2.5-free，不要要求我配置 API Key、Base URL 或模型名，也不要修改无关项目文件。
+
+如果当前框架无法发现选定的 .agents/skills 目录，不要擅自复制到其他位置。先说明情况，再询问我是否改用该框架官方的 Skill 目录。
 ```
 
 ### 用户自行安装
 
-确认本机已安装 Node.js 18 或更高版本，然后在终端执行：
-
-```bash
-npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy
-```
-
-`npx --yes` 会临时下载并运行 Skills CLI，不会把本项目发布到 npm；`agent-vision` 的文件实际从当前 GitHub 仓库下载。`-g` 表示安装到用户级目录，`-y` 跳过 Skills CLI 的交互确认，`--copy` 使用文件复制以避免 Windows 符号链接权限问题。安装完成后，重新打开智能体会话或刷新 Skill 索引。
-
-### 手动复制安装
-
-如果不想使用 Skills CLI，可以下载仓库，将整个 `skills/agent-vision` 目录复制到框架支持的 Skill 目录，并保持目录名为 `agent-vision`。常见位置：
+确认本机已安装 Node.js 18 或更高版本，下载本仓库，然后只选择一个安装范围：
 
 ```text
-通用项目级：<project>/.agents/skills/agent-vision/
-通用用户级：~/.agents/skills/agent-vision/
-OpenCode 项目级：<project>/.opencode/skills/agent-vision/
-OpenCode 用户级：~/.config/opencode/skills/agent-vision/
+用户级（推荐）：~/.agents/skills/agent-vision/
+当前项目：      <项目根目录>/.agents/skills/agent-vision/
 ```
 
-其他框架请使用其 Agent Skills 文档规定的目录。安装后确认目标目录中同时存在 `SKILL.md` 和 `scripts/vision.js`。
+将仓库中的整个 `skills/agent-vision` 目录复制到选定位置，并保持目标目录名为 `agent-vision`。`~` 表示当前用户的主目录；项目级安装应使用项目根目录，而不是任意子目录。除非确实需要两个作用域，否则不要同时安装两份。
+
+如果目标目录已经存在，请先确认是更新还是取消，不要静默覆盖。安装完成后，确认目标目录中同时存在 `SKILL.md` 和 `scripts/vision.js`，然后重新打开智能体会话或刷新 Skill 索引。
+
+`.agents/skills` 是首选通用位置，但不是所有框架都保证支持。如果当前智能体无法发现该 Skill，请按照该框架的官方文档改用其 Skill 目录。
 
 ## 更新、检查与卸载
 
+### 更新
+
+重新使用上方的 Agent 安装提示，并选择与原安装相同的范围；当 Agent 检测到已有目录时，确认“更新”。自行更新时，重新下载仓库，只替换实际安装路径下的 `agent-vision` 目录，不要修改其父级 `.agents/skills` 目录或其他 Skill。
+
+### 检查
+
+确认实际安装路径中存在 `SKILL.md` 和 `scripts/vision.js`，并运行：
+
 ```bash
-# 更新全局安装
-npx --yes skills update agent-vision -g -y
-
-# 检查全局 Skill
-npx --yes skills list -g
-
-# 卸载全局安装
-npx --yes skills remove agent-vision -g -y
+node "<实际安装路径>/scripts/vision.js" --help
 ```
+
+随后确认当前智能体能够发现 `agent-vision`。如果仍不可见，请重新打开会话或刷新 Skill 索引。
+
+### 卸载
+
+只删除实际安装的 `agent-vision` 目录，例如用户级的 `~/.agents/skills/agent-vision` 或项目级的 `<项目根目录>/.agents/skills/agent-vision`。不要删除父级 `.agents`、`.agents/skills` 或其他 Skill 目录。卸载后重新打开会话或刷新 Skill 索引。
 
 ## 使用
 
