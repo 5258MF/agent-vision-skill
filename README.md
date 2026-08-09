@@ -39,7 +39,7 @@ https://github.com/5258MF/agent-vision-skill
 
 安装后确认目标目录中存在 SKILL.md 和 scripts/vision.js，并验证当前智能体能否发现 agent-vision。告诉我实际安装路径，以及是否需要重启或新建会话。
 
-该 Skill 已固定使用 OpenCode Zen 的 mimo-v2.5-free，不要要求我配置 API Key、Base URL 或模型名，也不要修改无关项目文件。
+该 Skill 已固定使用 OpenCode Zen 的 mimo-v2.5-free，不要要求我配置 API Key、Base URL 或模型名，也不要修改无关项目文件。除检查 Node.js 和目标目录外，不要递归扫描我的用户目录，也不要读取或输出无关配置、日志、命令历史或凭据。
 
 如果当前框架无法发现选定的 .agents/skills 目录，不要擅自复制到其他位置。先说明情况，再询问我是否改用该框架官方的 Skill 目录。
 ```
@@ -109,26 +109,39 @@ node "<实际安装路径>/scripts/vision.js" --help
 
 对于 Skills CLI 安装，还可以分别检查项目级和用户级 Skill：
 
+项目级：
+
 ```bash
-npx --yes skills list -a universal
-npx --yes skills list -g -a universal
+npx --yes skills list
+```
+
+用户级：
+
+```bash
+npx --yes skills list -g
 ```
 
 ### 卸载
 
-使用 Agent 或手动复制安装时，只删除实际安装的 `agent-vision` 目录，例如用户级的 `~/.agents/skills/agent-vision` 或项目级的 `<项目根目录>/.agents/skills/agent-vision`。不要删除父级 `.agents`、`.agents/skills` 或其他 Skill 目录。
+使用 Agent 或手动复制安装时，只删除实际安装的 `agent-vision` 目录，例如用户级的 `~/.agents/skills/agent-vision` 或项目级的 `<项目根目录>/.agents/skills/agent-vision`。不要删除父级 `.agents`、`.agents/skills` 或其他 Skill 目录。如果最初使用 Skills CLI 安装，请不要先手动删除目录，以免留下无法自动清理的锁文件条目；请使用下面的 CLI 命令。
 
 使用 Skills CLI 安装时，根据原来的安装范围运行对应命令：
 
-```bash
-# 项目级
-npx --yes skills remove agent-vision -a universal
+项目级：
 
-# 用户级
-npx --yes skills remove agent-vision -a universal -g
+```bash
+npx --yes skills remove agent-vision -y
 ```
 
-卸载后重新打开会话或刷新 Skill 索引。
+用户级：
+
+```bash
+npx --yes skills remove agent-vision -g -y
+```
+
+卸载命令有意不使用 `-a universal`。当前 Skills CLI 将 Universal Skill 保存在共享的 canonical 目录中；只移除 `universal` 目标时，如果还检测到 Codex 等同样使用该目录的智能体，CLI 可能保留 Skill 目录和锁文件条目，却仍然报告成功。不带 `-a` 会清理 `agent-vision` 在所有智能体目标中的关联，但不会删除其他 Skill。这里末尾的 `-y` 是 Skills CLI 的非交互确认参数，与开头供 npm 使用的 `npx --yes` 不是同一个选项。
+
+卸载后同时确认实际安装目录已不存在，并且对应范围的 `skills list` 不再显示 `agent-vision`。如果曾执行带 `-a universal` 的卸载命令且目录仍在，请改用上方不带 `-a` 的对应命令；不要直接编辑锁文件。排查时只检查目标 Skill 目录和 Skills CLI 状态，不要递归扫描整个用户目录或读取无关配置。最后重新打开会话或刷新 Skill 索引。
 
 ## 使用
 

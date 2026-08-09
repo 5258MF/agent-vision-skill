@@ -39,7 +39,7 @@ If the target directory already exists, do not overwrite it. Tell me that an ins
 
 After installation, confirm that the target contains SKILL.md and scripts/vision.js, and verify that the current agent can discover agent-vision. Report the actual installation path and whether I need to restart or open a new session.
 
-This Skill is fixed to OpenCode Zen's mimo-v2.5-free. Do not ask me for an API key, base URL, or model name, and do not modify unrelated project files.
+This Skill is fixed to OpenCode Zen's mimo-v2.5-free. Do not ask me for an API key, base URL, or model name, and do not modify unrelated project files. Beyond checking Node.js and the target directory, do not recursively scan my home directory or read or print unrelated configuration, logs, command history, or credentials.
 
 If the current framework cannot discover the selected .agents/skills directory, do not copy the Skill elsewhere without permission. Explain the problem first, then ask whether I want to use that framework's official Skill directory.
 ```
@@ -109,26 +109,39 @@ Confirm that the current agent can discover `agent-vision`. If it is still unava
 
 For a Skills CLI installation, you can also inspect project-level and user-level Skills separately:
 
+Project-level:
+
 ```bash
-npx --yes skills list -a universal
-npx --yes skills list -g -a universal
+npx --yes skills list
+```
+
+User-level:
+
+```bash
+npx --yes skills list -g
 ```
 
 ### Remove
 
-For an agent-assisted or manually copied installation, delete only the installed `agent-vision` directory, such as the user-level `~/.agents/skills/agent-vision` or project-level `<project-root>/.agents/skills/agent-vision`. Do not delete the parent `.agents`, `.agents/skills`, or any other Skill directory.
+For an agent-assisted or manually copied installation, delete only the installed `agent-vision` directory, such as the user-level `~/.agents/skills/agent-vision` or project-level `<project-root>/.agents/skills/agent-vision`. Do not delete the parent `.agents`, `.agents/skills`, or any other Skill directory. If Skills CLI performed the original installation, do not manually delete the directory first because that can leave a lock entry the CLI cannot clean up automatically; use the CLI commands below.
 
 For a Skills CLI installation, run the command matching the original installation scope:
 
-```bash
-# Project-level
-npx --yes skills remove agent-vision -a universal
+Project-level:
 
-# User-level
-npx --yes skills remove agent-vision -a universal -g
+```bash
+npx --yes skills remove agent-vision -y
 ```
 
-Reopen the session or refresh the Skill index after removal.
+User-level:
+
+```bash
+npx --yes skills remove agent-vision -g -y
+```
+
+The removal commands intentionally omit `-a universal`. Skills CLI currently stores Universal Skills in a shared canonical directory. When only the `universal` target is removed, the CLI may keep the Skill directory and lock entry if it detects Codex or another agent using the same directory, even while reporting success. Omitting `-a` removes the `agent-vision` association across all agent targets without deleting other Skills. The trailing `-y` is Skills CLI's non-interactive confirmation flag; it is separate from the leading `npx --yes` option used by npm.
+
+After removal, confirm both that the actual installation directory no longer exists and that the matching `skills list` command no longer shows `agent-vision`. If you previously ran a removal command containing `-a universal` and the directory remains, use the corresponding command above without `-a`; do not edit the lock file directly. Limit troubleshooting to the target Skill directory and Skills CLI state rather than recursively scanning the home directory or reading unrelated configuration. Finally, reopen the session or refresh the Skill index.
 
 ## Usage
 
