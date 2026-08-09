@@ -1,6 +1,6 @@
 ---
 name: agent-vision
-description: Analyze local or remote images with the bundled MiMo image-analysis helper and return textual visual evidence. Use proactively whenever completing a task requires inspecting screenshots, rendered interfaces, charts, diagrams, photos, image attachments, or other visual evidence, even when the user does not explicitly request image analysis, including for description, comparison, classification, OCR, and visual question answering, especially when the current agent lacks native vision.
+description: Analyze local or remote images and return textual visual evidence. Use proactively whenever completing a task requires inspecting screenshots, rendered interfaces, charts, diagrams, photos, image attachments, or other visual evidence, even when the user does not explicitly request image analysis, including for description, comparison, classification, OCR, and visual question answering, especially when the current agent lacks native vision.
 ---
 
 # Agent Vision
