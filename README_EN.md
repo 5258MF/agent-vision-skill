@@ -139,9 +139,9 @@ User-level:
 npx --yes skills remove agent-vision -g -y
 ```
 
-The removal commands intentionally omit `-a universal`. Skills CLI currently stores Universal Skills in a shared canonical directory. When only the `universal` target is removed, the CLI may keep the Skill directory and lock entry if it detects Codex or another agent using the same directory, even while reporting success. Omitting `-a` removes the `agent-vision` association across all agent targets without deleting other Skills. The trailing `-y` is Skills CLI's non-interactive confirmation flag; it is separate from the leading `npx --yes` option used by npm.
+Do not add `-a universal` when removing the Skill, because the shared directory may otherwise be retained. The trailing `-y` skips the Skills CLI confirmation prompt.
 
-After removal, confirm both that the actual installation directory no longer exists and that the matching `skills list` command no longer shows `agent-vision`. If you previously ran a removal command containing `-a universal` and the directory remains, use the corresponding command above without `-a`; do not edit the lock file directly. Limit troubleshooting to the target Skill directory and Skills CLI state rather than recursively scanning the home directory or reading unrelated configuration. Finally, reopen the session or refresh the Skill index.
+After removal, confirm that the installation directory is gone, then reopen the session or refresh the Skill index.
 
 ## Usage
 

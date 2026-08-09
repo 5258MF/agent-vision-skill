@@ -139,9 +139,9 @@ npx --yes skills remove agent-vision -y
 npx --yes skills remove agent-vision -g -y
 ```
 
-卸载命令有意不使用 `-a universal`。当前 Skills CLI 将 Universal Skill 保存在共享的 canonical 目录中；只移除 `universal` 目标时，如果还检测到 Codex 等同样使用该目录的智能体，CLI 可能保留 Skill 目录和锁文件条目，却仍然报告成功。不带 `-a` 会清理 `agent-vision` 在所有智能体目标中的关联，但不会删除其他 Skill。这里末尾的 `-y` 是 Skills CLI 的非交互确认参数，与开头供 npm 使用的 `npx --yes` 不是同一个选项。
+卸载时不要添加 `-a universal`，否则共享目录中的文件可能被保留。末尾的 `-y` 用于跳过 Skills CLI 的确认提示。
 
-卸载后同时确认实际安装目录已不存在，并且对应范围的 `skills list` 不再显示 `agent-vision`。如果曾执行带 `-a universal` 的卸载命令且目录仍在，请改用上方不带 `-a` 的对应命令；不要直接编辑锁文件。排查时只检查目标 Skill 目录和 Skills CLI 状态，不要递归扫描整个用户目录或读取无关配置。最后重新打开会话或刷新 Skill 索引。
+完成后确认安装目录已删除，再重新打开会话或刷新 Skill 索引。
 
 ## 使用
 
