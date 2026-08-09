@@ -49,12 +49,22 @@ https://github.com/5258MF/agent-vision-skill
 如果希望自己安装，请在普通的交互式终端中亲自运行下面的命令，不要把它交给 Agent 执行：
 
 ```bash
-npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision --copy
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy
 ```
 
-这条命令特意不包含 `-g` 和 Skills CLI 的 `-y`。在普通终端中，CLI 会交互式询问目标智能体框架和安装范围；只选择需要使用该 Skill 的框架，并在项目级与用户级之间选择一个作用域。`npx --yes` 仅用于允许 npm 临时下载 Skills CLI，`--copy` 表示复制文件而不是创建符号链接。
+`-a universal` 将目标限定为共享 `.agents/skills` 目录的 Universal 安装，不再显示智能体框架选择界面。Amp、Replit 等是独立的目标，但能共享该通用目录。在普通终端中，不带 `-g` 和 Skills CLI 的 `-y` 会只保留“项目级还是用户级”的范围询问。`npx --yes` 仅用于允许 npm 临时下载 Skills CLI，`--copy` 表示复制文件而不是创建符号链接。
 
-Skills CLI 检测到自己运行在 AI Agent 内部时，可能自动切换为非交互模式，因此不要让 Agent 代为执行这一安装方式。如果 CLI 没有显示选择步骤，或显示将安装到多个无关框架，请立即中断，并改用上方的 Agent 安装提示或下方的手动安装。Skills CLI 会使用所选框架规定的目录；如果希望明确安装到 `.agents/skills`，请使用另外两种方式。
+如果已经明确安装范围，也可以使用非交互命令：
+
+```bash
+# 用户级：~/.agents/skills/agent-vision
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -g -y
+
+# 当前项目：<当前目录>/.agents/skills/agent-vision
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -y
+```
+
+Skills CLI 检测到自己运行在 AI Agent 内部时，可能自动切换为非交互模式，因此不要让 Agent 代为执行第一条交互命令；需要 Agent 安装时，请使用上方专门的安装提示。安装完成后以 CLI 报告的实际路径为准。
 
 ### 下载仓库手动安装
 
@@ -96,18 +106,22 @@ node "<实际安装路径>/scripts/vision.js" --help
 对于 Skills CLI 安装，还可以分别检查项目级和用户级 Skill：
 
 ```bash
-npx --yes skills list
-npx --yes skills list -g
+npx --yes skills list -a universal
+npx --yes skills list -g -a universal
 ```
 
 ### 卸载
 
 使用 Agent 或手动复制安装时，只删除实际安装的 `agent-vision` 目录，例如用户级的 `~/.agents/skills/agent-vision` 或项目级的 `<项目根目录>/.agents/skills/agent-vision`。不要删除父级 `.agents`、`.agents/skills` 或其他 Skill 目录。
 
-使用 Skills CLI 安装时，运行下面的交互式命令，并且只选择需要卸载的目标：
+使用 Skills CLI 安装时，根据原来的安装范围运行对应命令：
 
 ```bash
-npx --yes skills remove agent-vision
+# 项目级
+npx --yes skills remove agent-vision -a universal
+
+# 用户级
+npx --yes skills remove agent-vision -a universal -g
 ```
 
 卸载后重新打开会话或刷新 Skill 索引。
