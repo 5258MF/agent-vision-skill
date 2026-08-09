@@ -1,26 +1,20 @@
-# Agent Vision Skill
+# 👁️ Agent Vision Skill
+
+**Give AI agents without native vision a pair of eyes—zero configuration, ready to use.**
 
 [中文](README.md)
 
-A portable Agent Skill that adds image understanding to AI agents. It sends a local image or remote image URL to OpenCode Zen's `mimo-v2.5-free` model, then returns the textual result to the current agent for further work.
+Add image understanding to AI agents that lack native vision. The core advantage: **no API key, no base URL, and no environment variables**. Install the Skill, refresh the Skill index, and the agent can analyze images on demand.
 
-This project targets agent frameworks that support the [Agent Skills specification](https://agentskills.io/specification) and can execute Node.js commands.
+## ✨ Why this Skill?
 
-## Features
+- **Zero configuration** — No API key, base URL, or environment variables required. Install it with a single `npx` command.
+- **Broad compatibility** — Follows the [Agent Skills specification](https://agentskills.io/specification) and works with agent frameworks that support the specification and can execute Node.js commands.
+- **Local and remote images** — Supports JPEG, PNG, GIF, WebP, and BMP through local paths and HTTP/HTTPS URLs.
+- **Minimal dependencies** — Has no third-party runtime dependencies and only requires Node.js 18+.
+- **Flexible output** — Supports plain text and structured `--json` output for downstream automation.
 
-- Accepts local images and HTTP(S) image URLs
-- Supports JPEG, PNG, GIF, WebP, and BMP
-- Supports plain-text and `--json` output
-- Uses the fixed `mimo-v2.5-free` model with no API key, base URL, or model configuration
-- Has no third-party runtime dependencies and requires Node.js 18 or newer
-
-Fixed configuration:
-
-```text
-Model:    mimo-v2.5-free
-Endpoint: https://opencode.ai/zen/v1/chat/completions
-Auth:     none
-```
+> 🚀 Core purpose: Give AI agents without native vision access to image understanding by invoking this Skill in compatible agent frameworks. No extra configuration—install and use.
 
 ## Installation
 

@@ -1,26 +1,20 @@
-# Agent Vision Skill
+# 👁️ Agent Vision Skill
+
+**给不具备原生视觉能力的智能体一双眼睛 —— 无需配置，安装即用。**
 
 [English](README_EN.md)
 
-一个为智能体补充图像理解能力的通用 Agent Skill。它把本地图片或网络图片发送给 OpenCode Zen 的 `mimo-v2.5-free`，再将模型返回的文字结果交给当前智能体继续处理。
+为非多模态 AI 智能体补充视觉能力。核心特点是：**无需 API Key、Base URL 或任何环境变量**。安装并刷新 Skill 索引后，智能体即可按需分析图片。
 
-本项目面向兼容 [Agent Skills 规范](https://agentskills.io/specification)、允许执行 Node.js 命令的智能体框架。
+## ✨ 为什么选这个 Skill？
 
-## 特性
+- **零配置，开箱即用** —— 不需要申请 API Key，不需要填写 Base URL，不需要设置环境变量。使用一条 `npx` 命令即可完成安装。
+- **通用兼容** —— 遵循 [Agent Skills 规范](https://agentskills.io/specification)，适用于支持该规范且允许执行 Node.js 命令的智能体框架。
+- **本地 + 网络图片都支持** —— 支持 JPEG、PNG、GIF、WebP、BMP，本地路径和 HTTP/HTTPS URL 均可。
+- **极简依赖** —— 运行时零第三方 npm 依赖，只需 Node.js 18+。
+- **灵活输出** —— 支持普通文本和 `--json` 结构化输出，方便后续自动化处理。
 
-- 支持本地图片和 HTTP(S) 图片 URL
-- 支持 JPEG、PNG、GIF、WebP 和 BMP
-- 支持普通文本和 `--json` 输出
-- 固定使用 `mimo-v2.5-free`，无需 API Key、Base URL 或模型配置
-- 运行时零第三方 npm 依赖，仅需 Node.js 18 或更高版本
-
-当前固定配置：
-
-```text
-Model:    mimo-v2.5-free
-Endpoint: https://opencode.ai/zen/v1/chat/completions
-Auth:     none
-```
+> 🚀 核心定位：让没有原生视觉能力的 AI 在 Agent 框架中通过调用本 Skill 获得图像理解能力。无需额外配置，安装即可使用。
 
 ## 安装
 
