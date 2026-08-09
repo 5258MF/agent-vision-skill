@@ -22,13 +22,15 @@
 
 把下面这段话直接发给支持终端操作的 Agent：
 
-> 请帮我安装 `agent-vision` Skill：
-> https://github.com/5258MF/agent-vision-skill
->
-> 先确认 Node.js 版本不低于 18，然后优先执行：
-> `npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy`
->
-> 安装后确认当前智能体能够发现 `agent-vision`，告诉我实际安装路径，以及是否需要重启或新建会话。该 Skill 已固定使用 OpenCode Zen 的 `mimo-v2.5-free`，不要要求我配置 API Key、Base URL 或模型名，也不要修改无关项目文件。如果当前框架不能被 Skills CLI 识别，则根据该框架的 Skill 文档，将仓库中的 `skills/agent-vision` 复制到用户级 Skill 目录并验证。
+```text
+请帮我安装 agent-vision Skill：
+https://github.com/5258MF/agent-vision-skill
+
+先确认 Node.js 版本不低于 18，然后优先执行：
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy
+
+安装后确认当前智能体能够发现 agent-vision，告诉我实际安装路径，以及是否需要重启或新建会话。该 Skill 已固定使用 OpenCode Zen 的 mimo-v2.5-free，不要要求我配置 API Key、Base URL 或模型名，也不要修改无关项目文件。如果当前框架不能被 Skills CLI 识别，则根据该框架的 Skill 文档，将仓库中的 skills/agent-vision 复制到用户级 Skill 目录并验证。
+```
 
 ### 用户自行安装
 
