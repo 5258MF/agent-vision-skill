@@ -82,7 +82,11 @@ npx --yes skills remove agent-vision -g -y
 总结这张图表的主要趋势，不确定的地方请标出来。
 ```
 
-智能体会根据 `SKILL.md` 自动调用脚本。在仓库中也可以手动执行：
+即使用户没有明确要求“分析图片”，当任务需要检查截图、渲染后的界面、图表或其他视觉证据时，兼容框架中的智能体也可能根据 `SKILL.md` 主动调用脚本。例如，“按照 `mockups/checkout.png` 实现页面”可以触发智能体先分析参考图，再继续完成任务。
+
+自动触发不是强制保证。它取决于框架是否启用 Agent Skills、当前模型是否选择加载该 Skill、是否允许执行 Node.js 命令，以及图片路径或 URL 是否可访问；也可以由具备相应能力的框架安全生成并保存截图。没有可访问的图片且无法截图时，智能体应请求用户提供图片，而不是猜测画面内容。
+
+在仓库中也可以手动执行：
 
 ```bash
 node skills/agent-vision/scripts/vision.js "./screenshot.png" "请提取截图中的报错信息"
@@ -95,7 +99,7 @@ node skills/agent-vision/scripts/vision.js --json "./chart.png" "总结图表趋
 ## 工作方式
 
 ```text
-用户请求分析图片
+任务需要视觉证据
        ↓
 智能体加载 agent-vision/SKILL.md
        ↓

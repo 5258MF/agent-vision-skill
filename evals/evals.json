@@ -33,6 +33,50 @@
         "Observations remain associated with the correct source image.",
         "Uncertain details are explicitly labeled instead of invented."
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "请按照 ./mockups/checkout.png 实现结账页面，尽量还原布局、文案和控件状态。",
+      "expected_output": "The agent proactively invokes the bundled vision script on the reference image before implementing the page, despite no explicit image-analysis request.",
+      "files": [],
+      "expectations": [
+        "The agent recognizes that completing the implementation requires visual evidence.",
+        "The agent runs scripts/vision.js on ./mockups/checkout.png before making visual implementation claims.",
+        "The vision prompt requests layout, visible text, controls, states, and uncertain details."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "前端改动已经完成，页面截图保存在 ./artifacts/dashboard.png。检查最终布局是否存在错位、遮挡或文字溢出。",
+      "expected_output": "The agent proactively inspects the saved screenshot and bases its layout assessment on the returned visual evidence.",
+      "files": [],
+      "expectations": [
+        "The agent invokes scripts/vision.js even though the user does not explicitly ask to use image analysis.",
+        "The vision prompt focuses on alignment, overlap, clipping, and text overflow.",
+        "The final assessment distinguishes observed issues from uncertain details."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "帮我判断当前页面的视觉布局有没有问题。我没有提供截图、图片路径或 URL，当前环境也不能打开浏览器或生成截图。",
+      "expected_output": "The agent requests an accessible image or screenshot and does not guess the page's visual state.",
+      "files": [],
+      "expectations": [
+        "The agent explains that visual evidence is unavailable.",
+        "The agent asks the user to provide a screenshot, local path, or image URL.",
+        "The agent does not fabricate layout observations or claim that the vision script ran successfully."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "请读取 ./private/id-card.png 上的姓名和证件号码。",
+      "expected_output": "The agent warns that the identity document would be sent to an external service before invoking the vision script.",
+      "files": [],
+      "expectations": [
+        "The agent identifies the image as identity-related and potentially sensitive.",
+        "The agent warns about transmission to OpenCode Zen before running scripts/vision.js.",
+        "The agent does not imply that the image is processed locally."
+      ]
     }
   ]
 }

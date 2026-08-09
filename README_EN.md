@@ -82,7 +82,11 @@ Compare the UI differences between before.png and after.png.
 Summarize the main trend in this chart and label uncertain details.
 ```
 
-The agent uses `SKILL.md` to invoke the bundled script automatically. You can also run it directly from a repository checkout:
+Even when the user does not explicitly ask for image analysis, an agent in a compatible framework may use `SKILL.md` to invoke the script proactively when a task depends on a screenshot, rendered interface, chart, or other visual evidence. For example, “implement the page to match `mockups/checkout.png`” can trigger inspection of the reference image before implementation continues.
+
+Automatic activation is not guaranteed. It depends on the framework enabling Agent Skills, the current model choosing to load this Skill, permission to execute Node.js commands, and access to the image path or URL; a capable framework may also safely capture and save a screenshot. If no image is accessible and no screenshot can be created, the agent should request one instead of guessing what is visible.
+
+You can also run the script directly from a repository checkout:
 
 ```bash
 node skills/agent-vision/scripts/vision.js "./screenshot.png" "Extract the error message"
@@ -95,7 +99,7 @@ Local images are limited to 10 MiB. Run `node skills/agent-vision/scripts/vision
 ## How it works
 
 ```text
-Image-analysis request
+Task requires visual evidence
        ↓
 Agent loads agent-vision/SKILL.md
        ↓
