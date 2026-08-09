@@ -18,17 +18,7 @@ Add image understanding to AI agents that lack native vision. The core advantage
 
 ## Installation
 
-### Install it yourself (recommended)
-
-Confirm that Node.js 18 or newer is installed, then run this command in a terminal:
-
-```bash
-npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy
-```
-
-`npx --yes` temporarily downloads and runs Skills CLI; this project itself is not published to npm, and the `agent-vision` files are downloaded from this GitHub repository. `-g` installs at user scope, `-y` skips Skills CLI confirmation prompts, and `--copy` avoids symbolic-link permission issues on Windows. Reopen the agent session or refresh its Skill index after installation.
-
-### Ask an agent to install it
+### Ask an agent to install it (recommended)
 
 Paste the following message into an agent that can run terminal commands:
 
@@ -39,6 +29,16 @@ Paste the following message into an agent that can run terminal commands:
 > `npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy`
 >
 > After installation, verify that the current agent can discover `agent-vision`, report the actual installation path, and tell me whether I need to restart or open a new session. This Skill is fixed to OpenCode Zen's `mimo-v2.5-free`; do not ask me for an API key, base URL, or model name, and do not modify unrelated project files. If Skills CLI does not recognize the current framework, follow that framework's Skill documentation, copy `skills/agent-vision` into its user-level Skill directory, and verify the installation.
+
+### Install it yourself
+
+Confirm that Node.js 18 or newer is installed, then run this command in a terminal:
+
+```bash
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy
+```
+
+`npx --yes` temporarily downloads and runs Skills CLI; this project itself is not published to npm, and the `agent-vision` files are downloaded from this GitHub repository. `-g` installs at user scope, `-y` skips Skills CLI confirmation prompts, and `--copy` avoids symbolic-link permission issues on Windows. Reopen the agent session or refresh its Skill index after installation.
 
 ### Manual copy
 
