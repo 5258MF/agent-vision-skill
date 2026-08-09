@@ -1,0 +1,38 @@
+{
+  "skill_name": "agent-vision",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我刚上传了一张报错截图，附件路径是 ./attachments/build-error.png。请告诉我具体报错和最可能的原因。",
+      "expected_output": "The agent invokes the bundled vision script on the attachment, reports visible error text, and separates observed evidence from diagnosis.",
+      "files": [],
+      "expectations": [
+        "The agent uses scripts/vision.js instead of guessing the screenshot contents.",
+        "The prompt sent to the vision model asks for exact visible error text.",
+        "The final answer distinguishes visible evidence from interpretation."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "分析这张网络图片并用中文概括主体、可见文字和布局：https://example.com/demo.png",
+      "expected_output": "The agent passes the HTTP URL directly to the vision script and answers in Chinese using the returned visual evidence.",
+      "files": [],
+      "expectations": [
+        "The HTTP URL is passed directly to scripts/vision.js.",
+        "The answer covers subject, visible text, and layout.",
+        "The agent does not claim success if the external image cannot be fetched."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "对比附件里的 before.png 和 after.png，列出界面布局、文字和状态变化，不确定的地方要标出来。",
+      "expected_output": "The agent inspects both images, keeps results associated with each file, and produces an evidence-based comparison with uncertainty labels.",
+      "files": [],
+      "expectations": [
+        "Both images are processed before the comparison is written.",
+        "Observations remain associated with the correct source image.",
+        "Uncertain details are explicitly labeled instead of invented."
+      ]
+    }
+  ]
+}
