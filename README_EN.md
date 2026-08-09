@@ -56,11 +56,15 @@ npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal
 
 If you already know the desired scope, use one of these non-interactive commands:
 
-```bash
-# User-level: ~/.agents/skills/agent-vision
-npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -g -y
+Install at user level in `~/.agents/skills/agent-vision`:
 
-# Current project: <current-directory>/.agents/skills/agent-vision
+```bash
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -g -y
+```
+
+Install in the current project at `<current-directory>/.agents/skills/agent-vision`:
+
+```bash
 npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -y
 ```
 

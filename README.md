@@ -56,11 +56,15 @@ npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal
 
 如果已经明确安装范围，也可以使用非交互命令：
 
-```bash
-# 用户级：~/.agents/skills/agent-vision
-npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -g -y
+用户级安装到 `~/.agents/skills/agent-vision`：
 
-# 当前项目：<当前目录>/.agents/skills/agent-vision
+```bash
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -g -y
+```
+
+当前项目安装到 `<当前目录>/.agents/skills/agent-vision`：
+
+```bash
 npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -y
 ```
 
