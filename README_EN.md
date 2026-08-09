@@ -33,55 +33,55 @@ Before writing any files, ask me which installation scope I want:
 
 Wait for my explicit choice before continuing. Do not install to both locations or copy the Skill across every agent framework.
 
-Confirm that Node.js 18 or newer is available, then download the repository into a temporary directory and copy only skills/agent-vision into the selected location. For a project-level installation, use the project root; if the current directory is inside a Git repository, prefer the Git repository root. Remove the temporary download after copying.
+Confirm that Node.js 18 or newer is available. Download the repository into a temporary directory and copy only skills/agent-vision into the selected location. For a project installation, use the project root, or the Git repository root when applicable. Remove the temporary files afterward.
 
 If the target directory already exists, do not overwrite it. Tell me that an installation already exists and ask whether I want to update or cancel; replace the directory only after I confirm the update.
 
 After installation, confirm that the target contains SKILL.md and scripts/vision.js, and verify that the current agent can discover agent-vision. Report the actual installation path and whether I need to restart or open a new session.
 
-This Skill is fixed to OpenCode Zen's mimo-v2.5-free. Do not ask me for an API key, base URL, or model name, and do not modify unrelated project files. Beyond checking Node.js and the target directory, do not recursively scan my home directory or read or print unrelated configuration, logs, command history, or credentials.
+This Skill is fixed to OpenCode Zen's mimo-v2.5-free. Do not ask me for an API key, base URL, or model name. Do not inspect or modify unrelated files, or read or print credentials.
 
 If the current framework cannot discover the selected .agents/skills directory, do not copy the Skill elsewhere without permission. Explain the problem first, then ask whether I want to use that framework's official Skill directory.
 ```
 
 ### Install with Skills CLI
 
-To install it yourself, run the following command personally in a regular interactive terminal. Do not hand this command to an agent:
+Run these commands yourself in a regular interactive terminal; do not hand them to an agent.
+
+Choose the installation scope interactively:
 
 ```bash
 npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy
 ```
 
-`-a universal` limits the target to the Universal installation shared through `.agents/skills`, so the agent-framework selection screen is skipped. Amp, Replit, and similar entries remain separate targets, but they can share this common directory. In a regular terminal, omitting `-g` and Skills CLI's `-y` leaves only the project-versus-user scope prompt. `npx --yes` only permits npm to download Skills CLI temporarily; `--copy` copies files instead of creating symbolic links.
+`-a universal` fixes the destination to `.agents/skills`; `--copy` uses real files instead of symbolic links.
 
-If you already know the desired scope, use one of these non-interactive commands:
-
-Install at user level in `~/.agents/skills/agent-vision`:
+Fix the scope to user-level `~/.agents/skills/agent-vision`:
 
 ```bash
 npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -g -y
 ```
 
-Install in the current project at `<current-directory>/.agents/skills/agent-vision`:
+Fix the scope to the current project at `<current-directory>/.agents/skills/agent-vision`:
 
 ```bash
 npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -a universal --copy -y
 ```
 
-Skills CLI may switch to non-interactive mode automatically when it detects that it is running inside an AI agent, so do not ask an agent to execute the first interactive command. Use the dedicated agent prompt above for agent-assisted installation. Treat the actual path reported by the CLI as authoritative after installation.
+`npx --yes` skips the npm prompt; the trailing `-y` skips Skills CLI prompts. Treat the path reported by the CLI as authoritative.
 
 ### Download and install manually
 
-Confirm that Node.js 18 or newer is installed, download this repository, and choose exactly one installation scope:
+Confirm that Node.js 18 or newer is installed, download this repository, and choose one installation scope:
 
 ```text
 User-level (recommended): ~/.agents/skills/agent-vision/
 Current project:          <project-root>/.agents/skills/agent-vision/
 ```
 
-Copy the complete `skills/agent-vision` directory from the repository into the selected location and keep the destination directory name as `agent-vision`. `~` means the current user's home directory. For a project-level installation, use the project root rather than an arbitrary subdirectory. Do not install both copies unless you intentionally need both scopes.
+Copy the complete `skills/agent-vision` directory into the selected location; use the project root for a project installation. If the target already exists, confirm before replacing it.
 
-If the target directory already exists, decide whether to update or cancel before replacing it; never overwrite it silently. After installation, confirm that the target contains both `SKILL.md` and `scripts/vision.js`, then reopen the agent session or refresh its Skill index.
+Confirm that the target contains `SKILL.md` and `scripts/vision.js`, then reopen the session or refresh the Skill index.
 
 `.agents/skills` is the preferred common location, but not every framework guarantees support. If the current agent cannot discover the Skill, use the Skill directory documented by that framework.
 
@@ -89,25 +89,17 @@ If the target directory already exists, decide whether to update or cancel befor
 
 ### Update
 
-For an agent-assisted or manually copied installation, reuse the agent installation prompt above and choose the same scope as the existing installation. When the agent reports that the directory already exists, confirm the update. To update manually, download the repository again and replace only the installed `agent-vision` directory; do not modify its parent `.agents/skills` directory or other Skills.
-
-For a Skills CLI installation, run the following command and select the original installation scope when prompted:
-
-```bash
-npx --yes skills update agent-vision
-```
+Reinstall with the original method and scope. For an agent-assisted or manual installation, replace only the `agent-vision` directory. For a Skills CLI installation, rerun the matching `skills add` command above to preserve the `universal` and `--copy` settings.
 
 ### Inspect
 
-Confirm that the actual installation path contains `SKILL.md` and `scripts/vision.js`, then run:
+Confirm that the installation directory contains `SKILL.md` and `scripts/vision.js`, then run:
 
 ```bash
 node "<actual-install-path>/scripts/vision.js" --help
 ```
 
-Confirm that the current agent can discover `agent-vision`. If it is still unavailable, reopen the session or refresh the Skill index.
-
-For a Skills CLI installation, you can also inspect project-level and user-level Skills separately:
+Confirm that the current agent can discover `agent-vision`. If it is still unavailable, reopen the session or refresh the Skill index. Skills CLI users can also inspect the installation record:
 
 Project-level:
 
@@ -123,9 +115,7 @@ npx --yes skills list -g
 
 ### Remove
 
-For an agent-assisted or manually copied installation, delete only the installed `agent-vision` directory, such as the user-level `~/.agents/skills/agent-vision` or project-level `<project-root>/.agents/skills/agent-vision`. Do not delete the parent `.agents`, `.agents/skills`, or any other Skill directory. If Skills CLI performed the original installation, do not manually delete the directory first because that can leave a lock entry the CLI cannot clean up automatically; use the CLI commands below.
-
-For a Skills CLI installation, run the command matching the original installation scope:
+For an agent-assisted or manual installation, delete only the `agent-vision` directory, not its parent `.agents/skills`. For a Skills CLI installation, use the matching command:
 
 Project-level:
 
@@ -139,9 +129,7 @@ User-level:
 npx --yes skills remove agent-vision -g -y
 ```
 
-Do not add `-a universal` when removing the Skill, because the shared directory may otherwise be retained. The trailing `-y` skips the Skills CLI confirmation prompt.
-
-After removal, confirm that the installation directory is gone, then reopen the session or refresh the Skill index.
+Do not add `-a universal` when removing the Skill, because the shared directory may otherwise be retained. After confirming that the directory is gone, reopen the session or refresh the Skill index.
 
 ## Usage
 
