@@ -24,13 +24,15 @@ Auth:     none
 
 ## 安装
 
-### 一条命令安装
+### 用户自行安装（推荐）
+
+确认本机已安装 Node.js 18 或更高版本，然后在终端执行：
 
 ```bash
-npx skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy
 ```
 
-`-g` 表示安装到用户级目录，`-y` 跳过交互确认，`--copy` 使用文件复制以避免 Windows 符号链接权限问题。安装完成后，重新打开智能体会话或刷新 Skill 索引。
+`npx --yes` 会临时下载并运行 Skills CLI，不会把本项目发布到 npm；`agent-vision` 的文件实际从当前 GitHub 仓库下载。`-g` 表示安装到用户级目录，`-y` 跳过 Skills CLI 的交互确认，`--copy` 使用文件复制以避免 Windows 符号链接权限问题。安装完成后，重新打开智能体会话或刷新 Skill 索引。
 
 ### 复制给 Agent 自动安装
 
@@ -40,13 +42,13 @@ npx skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy
 > https://github.com/5258MF/agent-vision-skill
 >
 > 先确认 Node.js 版本不低于 18，然后优先执行：
-> `npx skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy`
+> `npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision -g -y --copy`
 >
 > 安装后确认当前智能体能够发现 `agent-vision`，告诉我实际安装路径，以及是否需要重启或新建会话。该 Skill 已固定使用 OpenCode Zen 的 `mimo-v2.5-free`，不要要求我配置 API Key、Base URL 或模型名，也不要修改无关项目文件。如果当前框架不能被 Skills CLI 识别，则根据该框架的 Skill 文档，将仓库中的 `skills/agent-vision` 复制到用户级 Skill 目录并验证。
 
-### 手动安装
+### 手动复制安装
 
-下载仓库后，将整个 `skills/agent-vision` 目录复制到框架支持的 Skill 目录，并保持目录名为 `agent-vision`。常见位置：
+如果不想使用 Skills CLI，可以下载仓库，将整个 `skills/agent-vision` 目录复制到框架支持的 Skill 目录，并保持目录名为 `agent-vision`。常见位置：
 
 ```text
 通用项目级：<project>/.agents/skills/agent-vision/
@@ -61,13 +63,13 @@ OpenCode 用户级：~/.config/opencode/skills/agent-vision/
 
 ```bash
 # 更新全局安装
-npx skills update agent-vision -g -y
+npx --yes skills update agent-vision -g -y
 
 # 检查全局 Skill
-npx skills list -g
+npx --yes skills list -g
 
 # 卸载全局安装
-npx skills remove agent-vision -g -y
+npx --yes skills remove agent-vision -g -y
 ```
 
 ## 使用
