@@ -4,7 +4,7 @@
 
 A portable Agent Skill that adds image understanding to AI agents. It sends a local image or remote image URL to OpenCode Zen's `mimo-v2.5-free` model, then returns the textual result to the current agent for further work.
 
-This project targets agent frameworks that support the [Agent Skills specification](https://agentskills.io/specification), can execute Node.js commands, and have outbound network access.
+This project targets agent frameworks that support the [Agent Skills specification](https://agentskills.io/specification) and can execute Node.js commands.
 
 ## Features
 

@@ -4,7 +4,7 @@
 
 一个为智能体补充图像理解能力的通用 Agent Skill。它把本地图片或网络图片发送给 OpenCode Zen 的 `mimo-v2.5-free`，再将模型返回的文字结果交给当前智能体继续处理。
 
-本项目面向兼容 [Agent Skills 规范](https://agentskills.io/specification)、允许执行 Node.js 命令并可访问外网的智能体框架。
+本项目面向兼容 [Agent Skills 规范](https://agentskills.io/specification)、允许执行 Node.js 命令的智能体框架。
 
 ## 特性
 
