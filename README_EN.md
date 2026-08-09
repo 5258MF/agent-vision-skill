@@ -8,7 +8,7 @@ Add image understanding to AI agents that lack native vision. The core advantage
 
 ## ✨ Why this Skill?
 
-- **Zero configuration** — No API key, base URL, or environment variables required. Copy the Skill directory into the selected `.agents/skills` location and start using it.
+- **Zero configuration** — No API key, base URL, or environment variables required. Install by pasting a prompt into an agent, running one interactive command, or copying the directory manually.
 - **Broad compatibility** — Follows the [Agent Skills specification](https://agentskills.io/specification) and works with agent frameworks that support the specification and can execute Node.js commands.
 - **Local and remote images** — Supports JPEG, PNG, GIF, WebP, and BMP through local paths and HTTP/HTTPS URLs.
 - **Minimal dependencies** — Has no third-party runtime dependencies and only requires Node.js 18+.
@@ -44,7 +44,19 @@ This Skill is fixed to OpenCode Zen's mimo-v2.5-free. Do not ask me for an API k
 If the current framework cannot discover the selected .agents/skills directory, do not copy the Skill elsewhere without permission. Explain the problem first, then ask whether I want to use that framework's official Skill directory.
 ```
 
-### Install it yourself
+### Install with Skills CLI
+
+To install it yourself, run the following command personally in a regular interactive terminal. Do not hand this command to an agent:
+
+```bash
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision --copy
+```
+
+This command intentionally omits `-g` and Skills CLI's `-y`. In a regular terminal, the CLI asks interactively which agent framework and installation scope to use. Select only the framework that needs the Skill, then choose either project or user scope. `npx --yes` only permits npm to download Skills CLI temporarily; `--copy` copies files instead of creating symbolic links.
+
+Skills CLI may switch to non-interactive mode automatically when it detects that it is running inside an AI agent, so do not ask an agent to execute this installation method. If the CLI does not show a selection step or says it will install to multiple unrelated frameworks, stop it immediately and use the agent prompt above or the manual method below. Skills CLI uses the directory defined for the selected framework; use one of the other two methods when you specifically want `.agents/skills`.
+
+### Download and install manually
 
 Confirm that Node.js 18 or newer is installed, download this repository, and choose exactly one installation scope:
 
@@ -63,7 +75,13 @@ If the target directory already exists, decide whether to update or cancel befor
 
 ### Update
 
-Reuse the agent installation prompt above and choose the same scope as the existing installation. When the agent reports that the directory already exists, confirm the update. To update manually, download the repository again and replace only the installed `agent-vision` directory; do not modify its parent `.agents/skills` directory or other Skills.
+For an agent-assisted or manually copied installation, reuse the agent installation prompt above and choose the same scope as the existing installation. When the agent reports that the directory already exists, confirm the update. To update manually, download the repository again and replace only the installed `agent-vision` directory; do not modify its parent `.agents/skills` directory or other Skills.
+
+For a Skills CLI installation, run the following command and select the original installation scope when prompted:
+
+```bash
+npx --yes skills update agent-vision
+```
 
 ### Inspect
 
@@ -75,9 +93,24 @@ node "<actual-install-path>/scripts/vision.js" --help
 
 Confirm that the current agent can discover `agent-vision`. If it is still unavailable, reopen the session or refresh the Skill index.
 
+For a Skills CLI installation, you can also inspect project-level and user-level Skills separately:
+
+```bash
+npx --yes skills list
+npx --yes skills list -g
+```
+
 ### Remove
 
-Delete only the installed `agent-vision` directory, such as the user-level `~/.agents/skills/agent-vision` or project-level `<project-root>/.agents/skills/agent-vision`. Do not delete the parent `.agents`, `.agents/skills`, or any other Skill directory. Reopen the session or refresh the Skill index after removal.
+For an agent-assisted or manually copied installation, delete only the installed `agent-vision` directory, such as the user-level `~/.agents/skills/agent-vision` or project-level `<project-root>/.agents/skills/agent-vision`. Do not delete the parent `.agents`, `.agents/skills`, or any other Skill directory.
+
+For a Skills CLI installation, run the following interactive command and select only the target you want to remove:
+
+```bash
+npx --yes skills remove agent-vision
+```
+
+Reopen the session or refresh the Skill index after removal.
 
 ## Usage
 

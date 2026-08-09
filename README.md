@@ -8,7 +8,7 @@
 
 ## ✨ 为什么选这个 Skill？
 
-- **零配置，开箱即用** —— 不需要申请 API Key，不需要填写 Base URL，不需要设置环境变量。将 Skill 目录复制到选定的 `.agents/skills` 位置即可使用。
+- **零配置，开箱即用** —— 不需要申请 API Key，不需要填写 Base URL，不需要设置环境变量。支持粘贴给 Agent、运行一条交互式命令或手动复制目录完成安装。
 - **通用兼容** —— 遵循 [Agent Skills 规范](https://agentskills.io/specification)，适用于支持该规范且允许执行 Node.js 命令的智能体框架。
 - **本地 + 网络图片都支持** —— 支持 JPEG、PNG、GIF、WebP、BMP，本地路径和 HTTP/HTTPS URL 均可。
 - **极简依赖** —— 运行时零第三方 npm 依赖，只需 Node.js 18+。
@@ -44,7 +44,19 @@ https://github.com/5258MF/agent-vision-skill
 如果当前框架无法发现选定的 .agents/skills 目录，不要擅自复制到其他位置。先说明情况，再询问我是否改用该框架官方的 Skill 目录。
 ```
 
-### 用户自行安装
+### Skills CLI 命令安装
+
+如果希望自己安装，请在普通的交互式终端中亲自运行下面的命令，不要把它交给 Agent 执行：
+
+```bash
+npx --yes skills add 5258MF/agent-vision-skill --skill agent-vision --copy
+```
+
+这条命令特意不包含 `-g` 和 Skills CLI 的 `-y`。在普通终端中，CLI 会交互式询问目标智能体框架和安装范围；只选择需要使用该 Skill 的框架，并在项目级与用户级之间选择一个作用域。`npx --yes` 仅用于允许 npm 临时下载 Skills CLI，`--copy` 表示复制文件而不是创建符号链接。
+
+Skills CLI 检测到自己运行在 AI Agent 内部时，可能自动切换为非交互模式，因此不要让 Agent 代为执行这一安装方式。如果 CLI 没有显示选择步骤，或显示将安装到多个无关框架，请立即中断，并改用上方的 Agent 安装提示或下方的手动安装。Skills CLI 会使用所选框架规定的目录；如果希望明确安装到 `.agents/skills`，请使用另外两种方式。
+
+### 下载仓库手动安装
 
 确认本机已安装 Node.js 18 或更高版本，下载本仓库，然后只选择一个安装范围：
 
@@ -63,7 +75,13 @@ https://github.com/5258MF/agent-vision-skill
 
 ### 更新
 
-重新使用上方的 Agent 安装提示，并选择与原安装相同的范围；当 Agent 检测到已有目录时，确认“更新”。自行更新时，重新下载仓库，只替换实际安装路径下的 `agent-vision` 目录，不要修改其父级 `.agents/skills` 目录或其他 Skill。
+使用 Agent 或手动复制安装时，重新使用上方的 Agent 安装提示并选择与原安装相同的范围；当 Agent 检测到已有目录时，确认“更新”。自行更新时，重新下载仓库，只替换实际安装路径下的 `agent-vision` 目录，不要修改其父级 `.agents/skills` 目录或其他 Skill。
+
+使用 Skills CLI 安装时，运行下面的命令，并在出现提示时选择原来的安装范围：
+
+```bash
+npx --yes skills update agent-vision
+```
 
 ### 检查
 
@@ -75,9 +93,24 @@ node "<实际安装路径>/scripts/vision.js" --help
 
 随后确认当前智能体能够发现 `agent-vision`。如果仍不可见，请重新打开会话或刷新 Skill 索引。
 
+对于 Skills CLI 安装，还可以分别检查项目级和用户级 Skill：
+
+```bash
+npx --yes skills list
+npx --yes skills list -g
+```
+
 ### 卸载
 
-只删除实际安装的 `agent-vision` 目录，例如用户级的 `~/.agents/skills/agent-vision` 或项目级的 `<项目根目录>/.agents/skills/agent-vision`。不要删除父级 `.agents`、`.agents/skills` 或其他 Skill 目录。卸载后重新打开会话或刷新 Skill 索引。
+使用 Agent 或手动复制安装时，只删除实际安装的 `agent-vision` 目录，例如用户级的 `~/.agents/skills/agent-vision` 或项目级的 `<项目根目录>/.agents/skills/agent-vision`。不要删除父级 `.agents`、`.agents/skills` 或其他 Skill 目录。
+
+使用 Skills CLI 安装时，运行下面的交互式命令，并且只选择需要卸载的目标：
+
+```bash
+npx --yes skills remove agent-vision
+```
+
+卸载后重新打开会话或刷新 Skill 索引。
 
 ## 使用
 
