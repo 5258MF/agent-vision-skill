@@ -10,7 +10,7 @@ Add image understanding to AI agents that lack native vision. The core advantage
 
 - **Zero configuration** — No API key, base URL, or environment variables required. Install by pasting a prompt into an agent, running one interactive command, or copying the directory manually.
 - **Broad compatibility** — Follows the [Agent Skills specification](https://agentskills.io/specification) and works with agent frameworks that support the specification and can execute Node.js commands.
-- **Local and remote images** — Supports JPEG, PNG, GIF, WebP, and BMP through local paths and HTTP/HTTPS URLs.
+- **Local, remote, and attached images** — Supports JPEG, PNG, GIF, WebP, and BMP through local paths, HTTP/HTTPS URLs, and host-accessible image attachments.
 - **Minimal dependencies** — Has no third-party runtime dependencies and only requires Node.js 18+.
 - **Flexible output** — Supports plain text and structured `--json` output for downstream automation.
 
@@ -151,9 +151,11 @@ You can also run the script directly from a repository checkout:
 node skills/agent-vision/scripts/vision.js "./screenshot.png" "Extract the error message"
 node skills/agent-vision/scripts/vision.js "https://example.com/image.png" "Describe this image"
 node skills/agent-vision/scripts/vision.js --json "./chart.png" "Summarize the chart trend"
+node skills/agent-vision/scripts/vision.js "data:image/png;base64,<base64-data>" "Read the visible text"
+cat image-data-url.txt | node skills/agent-vision/scripts/vision.js - "Analyze this image"
 ```
 
-Local images are limited to 10 MiB. Run `node skills/agent-vision/scripts/vision.js --help` for the command syntax.
+Local images and decoded data URLs are limited to 10 MiB. The script makes limited retries for empty responses and temporary service errors; retry later if the free endpoint returns 429. Run `node skills/agent-vision/scripts/vision.js --help` for the command syntax.
 
 ## How it works
 
@@ -164,7 +166,7 @@ Agent loads agent-vision/SKILL.md
        ↓
 Agent runs scripts/vision.js
        ↓
-Image URL or Base64 data URL
+Image path, URL, Base64 data URL, or host-accessible attachment
        ↓
 OpenCode Zen / mimo-v2.5-free
        ↓

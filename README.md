@@ -10,7 +10,7 @@
 
 - **零配置，开箱即用** —— 不需要申请 API Key，不需要填写 Base URL，不需要设置环境变量。支持粘贴给 Agent、运行一条交互式命令或手动复制目录完成安装。
 - **通用兼容** —— 遵循 [Agent Skills 规范](https://agentskills.io/specification)，适用于支持该规范且允许执行 Node.js 命令的智能体框架。
-- **本地 + 网络图片都支持** —— 支持 JPEG、PNG、GIF、WebP、BMP，本地路径和 HTTP/HTTPS URL 均可。
+- **本地、网络和附件图片** —— 支持 JPEG、PNG、GIF、WebP、BMP，本地路径、HTTP/HTTPS URL，以及宿主暴露的图片附件均可。
 - **极简依赖** —— 运行时零第三方 npm 依赖，只需 Node.js 18+。
 - **灵活输出** —— 支持普通文本和 `--json` 结构化输出，方便后续自动化处理。
 
@@ -151,9 +151,11 @@ npx --yes skills remove agent-vision -g -y
 node skills/agent-vision/scripts/vision.js "./screenshot.png" "请提取截图中的报错信息"
 node skills/agent-vision/scripts/vision.js "https://example.com/image.png" "描述这张图片"
 node skills/agent-vision/scripts/vision.js --json "./chart.png" "总结图表趋势"
+node skills/agent-vision/scripts/vision.js "data:image/png;base64,<base64-data>" "读取图片中的文字"
+cat image-data-url.txt | node skills/agent-vision/scripts/vision.js - "分析这张图片"
 ```
 
-本地图片最大为 10 MiB。运行 `node skills/agent-vision/scripts/vision.js --help` 可查看命令格式。
+本地图片和 data URL 解码后最大为 10 MiB。脚本会对空响应和临时服务错误有限重试；免费端点返回 429 时请稍后再试。运行 `node skills/agent-vision/scripts/vision.js --help` 可查看命令格式。
 
 ## 工作方式
 
@@ -164,7 +166,7 @@ node skills/agent-vision/scripts/vision.js --json "./chart.png" "总结图表趋
        ↓
 调用 scripts/vision.js
        ↓
-图片 URL 或 Base64 data URL
+图片路径、URL、Base64 data URL 或宿主可访问的附件
        ↓
 OpenCode Zen / mimo-v2.5-free
        ↓
